@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Flipbook Gallery with Secret Sequence</title>
+  <style>
+    /* Basic reset and styling */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #000000;
+    }
+    
+
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      max-width: 1400px;
+      margin: 20px;
+    }
+
+    /* Large thumbnail for the first image */
+    .gallery-container img:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    /* Thumbnail styles */
+    .thumbnail {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 2 / 3;
+      border: 2px solid #000000;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    
+    .thumbnail:hover {
+      transform: scale(1.05);
+      border-color: #777;
+    }
+
+    /* Popup overlay styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .popup-overlay.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Popup content styles */
+    .popup-content {
+      position: relative;
+      background: white;
+      padding: 10px;
+      max-width: 800px;
+      width: 90%;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .popup-content iframe {
+      width: 100%;
+      height: 600px;
+      border: 1px solid lightgray;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #333;
+      color: #fff;
+      font-size: 18px;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Gallery Container -->
+  <div class="gallery-container">
+    <img src=".\images\images\hth_03.gif" alt="Flipbook 1" class="thumbnail" onclick="openPopup(1, 'https://heyzine.com/flip-book/8467826462.html')">
+    <img src=".\images\images\hth_05.gif" alt="Flipbook 2" class="thumbnail" onclick="openPopup(2, 'https://heyzine.com/flip-book/cd19181153.html')">
+    <img src=".\images\images\hth_07.gif" alt="Flipbook 3" class="thumbnail" onclick="openPopup(3, 'https://heyzine.com/flip-book/c7b9f26652.html')">
+    <img src=".\images\images\hth_09.gif" alt="Flipbook 4" class="thumbnail" onclick="openPopup(4, 'https://heyzine.com/flip-book/552fd61f39.html')">
+    <img src=".\images\images\hth_11.png" alt="Flipbook 5" class="thumbnail" onclick="window.location.href='https://events.humanitix.com/hvck-magazine-pres-hvck-the-hills'">
+    <img src=".\images\images\hth_17.gif" alt="Flipbook 6" class="thumbnail" onclick="openPopup(6, 'https://heyzine.com/flip-book/03c4be1ab6.html')">
+    <img src=".\images\images\hth_18.gif" alt="Flipbook 7" class="thumbnail" onclick="openPopup(7, 'https://heyzine.com/flip-book/b30ce9458f.html')">
+    <img src=".\images\images\hth_19.gif" alt="Flipbook 8" class="thumbnail" onclick="window.location.href='hvckmag.html'">
+    <img src=".\images\images\hth_20.png" alt="Flipbook 9" class="thumbnail" onclick="openPopup(9, 'https://heyzine.com/flip-book/c17eb1adee.html')">
+  </div>
+
+  <!-- Popup Overlay -->
+  <div id="popupOverlay" class="popup-overlay" onclick="closePopup(event)">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <button class="close-btn" onclick="closePopup()">×</button>
+      <iframe id="flipbookIframe" class="fp-iframe" src="" allowfullscreen="allowfullscreen" scrolling="no"></iframe>
+    </div>
+  </div>
+
+  <script>
+    // Define the correct sequence to unlock the secret page
+    const secretSequence = [2, 7, 4, 9, 1];
+    let userSequence = [];
+
+    // Function to open popup with the specified URL
+    function openPopup(imageNumber, url) {
+      const iframe = document.getElementById('flipbookIframe');
+      iframe.src = url;
+      document.getElementById('popupOverlay').classList.add('show');
+
+      // Track the sequence of clicked thumbnails
+      userSequence.push(imageNumber);
+
+      // Check if userSequence matches the start of secretSequence
+      for (let i = 0; i < userSequence.length; i++) {
+        if (userSequence[i] !== secretSequence[i]) {
+          // If sequence does not match, reset userSequence
+          userSequence = [];
+          return;
+        }
+      }
+
+      // If the entire secret sequence matches, unlock the secret page
+      if (userSequence.length === secretSequence.length) {
+        alert('Congratulations! You unlocked the secret page.');
+        window.location.href = 'socurious.html'; // Replace 'secret.html' with the URL of the secret page.
+      }
+    }
+
+    // Function to close the popup and clear the iframe src
+    function closePopup(event) {
+      if (!event || event.target === document.getElementById('popupOverlay')) {
+        document.getElementById('popupOverlay').classList.remove('show');
+        document.getElementById('flipbookIframe').src = "";
+      }
+    }
+  </script>
+
+</body>
+</html>

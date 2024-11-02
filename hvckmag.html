@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Flipbook Gallery</title>
+  <style>
+    /* Basic reset and styling */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      max-width: 1400px;
+      margin: 20px;
+    }
+
+    /* Large thumbnail for the first image */
+    .gallery-container img:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    /* Thumbnail styles */
+    .thumbnail {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 2 / 3;
+      border: 2px solid #ccc;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    
+    .thumbnail:hover {
+      transform: scale(1.05);
+      border-color: #777;
+    }
+
+    /* Popup overlay styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .popup-overlay.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Popup content styles */
+    .popup-content {
+      position: relative;
+      background: white;
+      padding: 10px;
+      max-width: 800px;
+      width: 90%;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .popup-content iframe {
+      width: 100%;
+      height: 600px;
+      border: 1px solid lightgray;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #333;
+      color: #fff;
+      font-size: 18px;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Gallery Container -->
+  <div class="gallery-container">
+    <img src="https://heyzine.com/files/uploaded/84678264624aadd4c1620971a5fbb6563d6fb2ce-3.pdf-thumb.jpg" alt="Flipbook 1" class="thumbnail" onclick="openPopup('https://heyzine.com/flip-book/8467826462.html')">
+    <img src="https://heyzine.com/files/uploaded/v2/cd191811533b2cbf5dd5aef6366ed06b9864f6c9-1.pdf-thumb.jpg" alt="Flipbook 2" class="thumbnail" onclick="openPopup('https://heyzine.com/flip-book/cd19181153.html')">
+    <img src="https://heyzine.com/files/uploaded/v2/c7b9f266529820f7cbc564fdf4037966822db360.pdf-thumb.jpg" alt="Flipbook 3" class="thumbnail" onclick="openPopup('https://heyzine.com/flip-book/c7b9f26652.html')">
+    <img src="https://heyzine.com/files/uploaded/v2/552fd61f3955e2091b06dbd41da2ae20bb7745fe-3.pdf-thumb.jpg" alt="Flipbook 4" class="thumbnail" onclick="openPopup('https://heyzine.com/flip-book/552fd61f39.html')">
+    <img src="https://heyzine.com/files/uploaded/v2/d584334ab640200e0c5cac44db10c2140f5b3383.pdf-thumb.jpg" alt="Flipbook 5" class="thumbnail" onclick="openPopup('https://heyzine.com/flip-book/d584334ab6.html')">
+    <img src="https://heyzine.com/files/uploaded/v2/03c4be1ab642a6cf42c3f74dfc194d6df0f29e18.pdf-thumb.jpg" alt="Flipbook 6" class="thumbnail" onclick="openPopup('https://heyzine.com/flip-book/03c4be1ab6.html')">
+    <img src="https://heyzine.com/files/uploaded/v2/b30ce9458fd9171f86097f2d871405db185047b2.pdf-thumb.jpg" alt="Flipbook 7" class="thumbnail" onclick="openPopup('https://heyzine.com/flip-book/b30ce9458f.html')">
+    <img src="https://heyzine.com/files/uploaded/v2/94ae4e9d6abc7354494f0057a126e2c0c07bd07d.pdf-thumb.jpg" alt="Flipbook 8" class="thumbnail" onclick="openPopup('https://heyzine.com/flip-book/94ae4e9d6a.html')">
+    <img src="back.png" alt="Flipbook 9" class="thumbnail" onclick="window.location.href='index.html'">
+  </div>
+
+  <!-- Popup Overlay -->
+  <div id="popupOverlay" class="popup-overlay" onclick="closePopup(event)">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <button class="close-btn" onclick="closePopup()">×</button>
+      <iframe id="flipbookIframe" class="fp-iframe" src="" allowfullscreen="allowfullscreen" scrolling="no"></iframe>
+    </div>
+  </div>
+
+  <script>
+    // Function to open popup with the specified URL
+    function openPopup(url) {
+      const iframe = document.getElementById('flipbookIframe');
+      iframe.src = url;
+      document.getElementById('popupOverlay').classList.add('show');
+    }
+
+    // Function to close the popup and clear the iframe src
+    function closePopup(event) {
+      if (!event || event.target === document.getElementById('popupOverlay')) {
+        document.getElementById('popupOverlay').classList.remove('show');
+        document.getElementById('flipbookIframe').src = "";
+      }
+    }
+  </script>
+
+</body>
+</html>
