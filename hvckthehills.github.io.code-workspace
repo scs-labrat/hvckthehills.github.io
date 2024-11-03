@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "hvckthehills.github.io",
+			"path": "."
+		},
+		{
+			"name": "images",
+			"path": "../HVCK Gallery/HVCK/images"
+		},
+		{
+			"name": "ffutsterces",
+			"path": "../HVCK Gallery/HVCK/ffutsterces"
+		}
+	],
+	"settings": {}
+}
