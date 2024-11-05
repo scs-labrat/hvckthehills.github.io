@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Flipbook Gallery with Secret Sequence</title>
+  <title>HVCK the HILLS</title>
   <style>
     /* Basic reset and styling */
     body, html {
@@ -113,12 +113,12 @@
   <!-- Gallery Container -->
   <div class="gallery-container">
     <img src=".\images\hth_03.gif" alt="Flipbook 1" class="thumbnail" onclick="openPopup(1, 'https://heyzine.com/flip-book/8467826462.html')">
-    <img src=".\images\hth_05.gif" alt="Flipbook 2" class="thumbnail" onclick="openPopup(2, 'socurious.html')">
+    <img src=".\images\hth_05.gif" alt="Flipbook 2" class="thumbnail" onclick="openPopup(2, 'hvck.html')">
     <img src=".\images\hth_07.gif" alt="Flipbook 3" class="thumbnail" onclick="openPopup(3, 'https://heyzine.com/flip-book/0588d58bf8.html')">
     <img src=".\images\hth_09.gif" alt="Flipbook 4" class="thumbnail" onclick="openPopup(4, '.\\call4papers.html')">
     <img src=".\images\hth_11.png" alt="Flipbook 5" class="thumbnail" onclick="window.location.href='https://events.humanitix.com/hvck-magazine-pres-hvck-the-hills'">
-    <img src=".\images\hth_17.gif" alt="Flipbook 6" class="thumbnail" onclick="openPopup(6, 'hvck.html')">
-    <img src=".\images\hth_18.gif" alt="Flipbook 7" class="thumbnail" onclick="openPopup(6,  'https://teemill.com/product-feed?a=FLWNlMkNIoetzOwzMiUGpmyMNVoDJmeuVqwFxUOw&b=360298')">
+    <img src=".\images\hth_17.gif" alt="Flipbook 6" class="thumbnail" onclick="openPopup(6, 'hvck2.html')">
+    <img src=".\images\hth_18.gif" alt="Flipbook 7" class="thumbnail" onclick="window.open('https://asymmetric-1337.teemill.com/', '_blank')">
     <img src=".\images\hth_19.gif" alt="Flipbook 8" class="thumbnail" onclick="window.location.href='hvckmag.html'">
     <img src=".\images\hth_20.png" alt="Flipbook 9" class="thumbnail" onclick="window.location.href='https://heyzine.com/flip-book/c17eb1adee.html'">
   </div>
@@ -133,41 +133,47 @@
 
   <script>
     // Define the correct sequence to unlock the secret page
-    const secretSequence = [2, 6, 2, 6, 1]; // Updated secret sequence
-    let userSequence = [];
+      const secretSequence = [2, 6, 2, 6, 1]; // Updated secret sequence
+      let userSequence = [];
 
-    // Function to open popup with the specified URL
-    function openPopup(imageNumber, url) {
-        const iframe = document.getElementById('flipbookIframe');
-        iframe.src = url;
-        document.getElementById('popupOverlay').classList.add('show');
+      // Function to open popup with the specified URL
+      function openPopup(imageNumber, url) {
+          const iframe = document.getElementById('flipbookIframe');
+          iframe.src = url;
+          document.getElementById('popupOverlay').classList.add('show');
 
-        // Track the sequence of clicked thumbnails
-        userSequence.push(imageNumber);
+          // Track the sequence of clicked thumbnails
+          userSequence.push(imageNumber);
 
-        // Check if userSequence matches the start of secretSequence
-        for (let i = 0; i < userSequence.length; i++) {
-            if (userSequence[i] !== secretSequence[i]) {
-                // If sequence does not match, reset userSequence
-                userSequence = [];
-                return;
-            }
-        }
+          // Check if userSequence matches the start of secretSequence
+          for (let i = 0; i < userSequence.length; i++) {
+              if (userSequence[i] !== secretSequence[i]) {
+                  // If sequence does not match, reset userSequence
+                  userSequence = [];
+                  return;
+              }
+          }
 
-        // If the entire secret sequence matches, unlock the secret page
-        if (userSequence.length === secretSequence.length) {
-            alert('Congratulations! You unlocked the secret page.');
-            window.location.href = 'socurious.html'; // 
-        }
-    }
+          // If the entire secret sequence matches, unlock the secret page
+          if (userSequence.length === secretSequence.length) {
+              alert('Congratulations! You unlocked the secret page.');
+              window.location.href = 'long-cat-is-long.html'; 
+              userSequence = []; // Clear the sequence after unlocking
+          }
 
-    // Function to close the popup and clear the iframe src
-    function closePopup(event) {
-        if (!event || event.target === document.getElementById('popupOverlay')) {
-            document.getElementById('popupOverlay').classList.remove('show');
-            document.getElementById('flipbookIframe').src = "";
-        }
-    }
+          // Prevent userSequence from growing indefinitely
+          if (userSequence.length > secretSequence.length) {
+              userSequence = [];
+          }
+      }
+
+      // Function to close the popup and clear the iframe src
+      function closePopup(event) {
+          if (!event || event.target === document.getElementById('popupOverlay')) {
+              document.getElementById('popupOverlay').classList.remove('show');
+              document.getElementById('flipbookIframe').src = "";
+          }
+      }
 </script>
 
 </body>
