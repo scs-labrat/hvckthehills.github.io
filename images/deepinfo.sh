@@ -1,0 +1,1 @@
+file="$1"; [[ -e "$file" ]] && { file "$file"; getfattr -d "$file" 2>/dev/null || echo "No extended attributes."; command -v exiftool &> /dev/null && exiftool "$file" || echo "Exiftool not installed."; } || echo "File not found."
